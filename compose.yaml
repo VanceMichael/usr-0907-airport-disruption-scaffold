@@ -1,0 +1,12 @@
+services:
+  scaffold:
+    build:
+      context: .
+      dockerfile: Dockerfile.scaffold
+    init: true
+    healthcheck:
+      test: ["CMD", "sh", "scaffold/validate_inputs.sh"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+      start_period: 2s
