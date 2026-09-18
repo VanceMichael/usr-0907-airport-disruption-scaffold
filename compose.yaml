@@ -10,3 +10,25 @@ services:
       timeout: 2s
       retries: 10
       start_period: 2s
+
+  disruption-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    environment:
+      PORT: "8080"
+      DB_PATH: /data/disruptions.db
+    ports:
+      - "8080:8080"
+    volumes:
+      - disruption-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys;sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/healthz',timeout=2).getcode()==200 else 1)"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+
+volumes:
+  disruption-data:
