@@ -4,4 +4,9 @@
 *.pem
 __pycache__/
 *.py[cod]
-
+tests/
+scripts/
+data/
+*.db
+*.db-wal
+*.db-shm
